@@ -1,0 +1,13 @@
+{
+  "name": "eve-devs",
+  "private": true,
+  "workspaces": [
+    "packages/pump-deploy",
+    "services/deploy-agent"
+  ],
+  "scripts": {
+    "build": "npm run build -w @eve/pump-deploy && npm run build -w @eve/deploy-agent",
+    "start:agent": "npm run start -w @eve/deploy-agent",
+    "dev:agent": "npm run dev -w @eve/deploy-agent"
+  }
+}
