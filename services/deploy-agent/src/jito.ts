@@ -18,11 +18,18 @@ export interface JitoSendResult {
   bundleId: string;
 }
 
+/** Accepts block-engine host (https://mainnet.block-engine.jito.wtf) or full bundles URL from Jito docs. */
+export function resolveJitoBundlesUrl(blockEngineBaseOrFullUrl: string): string {
+  const trimmed = blockEngineBaseOrFullUrl.replace(/\/$/, "");
+  if (trimmed.endsWith("/api/v1/bundles")) return trimmed;
+  return `${trimmed}/api/v1/bundles`;
+}
+
 export async function sendBundleViaJito(
   blockEngineBaseUrl: string,
   transactionsBase64: string[]
 ): Promise<JitoSendResult> {
-  const url = `${blockEngineBaseUrl.replace(/\/$/, "")}/api/v1/bundles`;
+  const url = resolveJitoBundlesUrl(blockEngineBaseUrl);
   const body = {
     jsonrpc: "2.0",
     id: 1,
